@@ -1,4 +1,4 @@
-# Rayan — Portfolio v2
+# GaZaRa — Portfolio v2
 
 Portfolio personnel : Next.js 16 (App Router, Turbopack), React 19, Tailwind CSS v4,
 scène 3D `three` / React Three Fiber, animations Motion, et une couche données
@@ -78,21 +78,21 @@ Le site tourne sur http://localhost:3000.
 
 ## Identité visuelle
 
-Le sceau (anneau hexagonal ouvert + noyau) est décrit une seule fois, en
-coordonnées, dans `src/lib/brand/mark.ts`. `pnpm brand:assets` en dérive :
+Le monogramme **GZR** (initiales de **GaZaRa**) est décrit une seule fois, en
+coordonnées, dans `src/lib/brand/monogram.ts`. `pnpm brand:assets` en dérive :
 
 | Fichier                        | Usage                                  |
 | ------------------------------ | -------------------------------------- |
-| `src/app/icon.svg`             | icône d'onglet (anneau fermé, lisible à 16 px) |
+| `src/app/icon.svg`             | icône d'onglet (trait renforcé à 16 px)|
 | `src/app/favicon.ico`          | 16 / 32 / 48 px                        |
 | `src/app/apple-icon.png`       | 180 px, écran d'accueil iOS            |
 | `public/brand/icon-512.png`    | source, réseaux sociaux, presse        |
 | `public/brand/icon.svg`        | source vectorielle haute résolution    |
-| `src/lib/brand/mark-data.ts`   | emblème base64 pour la carte Open Graph |
+| `src/lib/brand/mark-data.ts`   | monogramme base64 pour la carte Open Graph |
 
 La bannière 1200 × 630 est générée à la demande par
-`src/app/[locale]/opengraph-image.tsx` : elle reprend l'emblème, la grille et
-la hiérarchie typographique du site, dans la langue de la page.
+`src/app/[locale]/opengraph-image.tsx` : elle reprend le lockup (monogramme,
+nom, rôle traduit), la grille et la hiérarchie typographique du site.
 
 ## Architecture
 
@@ -116,7 +116,7 @@ src/
 │  └─ …                  nav, marquee, stats, système, contact, footer
 ├─ lib/
 │  ├─ i18n/               config, dictionnaires, getDictionary
-│  ├─ brand/mark.ts       géométrie du sceau (source unique)
+│  ├─ brand/monogram.ts   géométrie du monogramme GZR (source unique)
 │  ├─ github.ts           lecture de l'API GitHub (cache 1 h)
 │  ├─ projects.ts         fusion GitHub ↔ Turso, localisée
 │  ├─ db/schema.ts        tables `projects`, `page_views`

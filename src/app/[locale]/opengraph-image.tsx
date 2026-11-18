@@ -1,17 +1,17 @@
 import { ImageResponse } from "next/og";
 
-import { MARK_COLORS } from "@/lib/brand/mark";
-import { MARK_PNG_BASE64, MARK_RING_BASE64 } from "@/lib/brand/mark-data";
+import { BRAND_COLORS, BRAND_NAME } from "@/lib/brand/monogram";
+import { MONOGRAM_GHOST_BASE64, MONOGRAM_PNG_BASE64 } from "@/lib/brand/mark-data";
 import { env } from "@/lib/env";
 import { defaultLocale, isLocale } from "@/lib/i18n/config";
 import { getDictionary } from "@/lib/i18n";
 
-export const alt = "Rayan — Portfolio";
+export const alt = `${BRAND_NAME} — Portfolio`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-const MARK_SRC = `data:image/png;base64,${MARK_PNG_BASE64}`;
-const RING_SRC = `data:image/png;base64,${MARK_RING_BASE64}`;
+const MONOGRAM_SRC = `data:image/png;base64,${MONOGRAM_PNG_BASE64}`;
+const GHOST_SRC = `data:image/png;base64,${MONOGRAM_GHOST_BASE64}`;
 
 /** Traits de grille : satori ne gère pas `repeating-linear-gradient`. */
 const GRID_LINES = [0, 1, 2, 3, 4, 5];
@@ -40,10 +40,10 @@ export default async function OpengraphImage({
           flexDirection: "column",
           position: "relative",
           padding: "64px 68px",
-          backgroundColor: MARK_COLORS.ink,
+          backgroundColor: BRAND_COLORS.ink,
           backgroundImage:
             "radial-gradient(circle at 8% -12%, rgba(124,92,255,0.34), transparent 46%), radial-gradient(circle at 96% 108%, rgba(34,211,238,0.20), transparent 44%)",
-          color: MARK_COLORS.chalk,
+          color: BRAND_COLORS.chalk,
           fontFamily: "sans-serif",
         }}
       >
@@ -77,17 +77,17 @@ export default async function OpengraphImage({
           ))}
         </div>
 
-        {/* Sceau en filigrane */}
+        {/* Monogramme en filigrane */}
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
           alt=""
-          src={RING_SRC}
-          width={540}
-          height={540}
-          style={{ position: "absolute", right: -96, top: 128, opacity: 0.085 }}
+          src={GHOST_SRC}
+          width={560}
+          height={560}
+          style={{ position: "absolute", right: -72, top: 120, opacity: 0.08 }}
         />
 
-        {/* En-tête */}
+        {/* En-tête : lockup monogramme + nom + rôle */}
         <div
           style={{
             display: "flex",
@@ -97,22 +97,43 @@ export default async function OpengraphImage({
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: 18 }}>
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img alt="" src={MARK_SRC} width={54} height={54} />
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                width: 62,
+                height: 62,
+                borderRadius: 16,
+                border: `1px solid ${BRAND_COLORS.line}`,
+                backgroundColor: BRAND_COLORS.inkSoft,
+              }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img alt="" src={MONOGRAM_SRC} width={48} height={48} />
+            </div>
             <div style={{ display: "flex", flexDirection: "column" }}>
-              <div style={{ display: "flex", fontSize: 20, letterSpacing: 1.6, color: MARK_COLORS.chalk }}>
-                Rayan
+              <div
+                style={{
+                  display: "flex",
+                  fontSize: 22,
+                  fontWeight: 600,
+                  letterSpacing: 4.5,
+                  color: BRAND_COLORS.chalk,
+                }}
+              >
+                {BRAND_NAME.toUpperCase()}
               </div>
               <div
                 style={{
                   display: "flex",
-                  fontSize: 15,
-                  letterSpacing: 3.4,
-                  color: MARK_COLORS.mute,
-                  marginTop: 4,
+                  fontSize: 14,
+                  letterSpacing: 3.2,
+                  color: BRAND_COLORS.mute,
+                  marginTop: 5,
                 }}
               >
-                PORTFOLIO / 2026
+                {dict.meta.role.toUpperCase()}
               </div>
             </div>
           </div>
@@ -122,12 +143,12 @@ export default async function OpengraphImage({
               display: "flex",
               alignItems: "center",
               gap: 10,
-              border: `1px solid ${MARK_COLORS.line}`,
+              border: `1px solid ${BRAND_COLORS.line}`,
               borderRadius: 999,
               padding: "8px 20px",
               fontSize: 16,
               letterSpacing: 3,
-              color: MARK_COLORS.mute,
+              color: BRAND_COLORS.mute,
             }}
           >
             <div
@@ -135,7 +156,7 @@ export default async function OpengraphImage({
                 width: 7,
                 height: 7,
                 borderRadius: 999,
-                backgroundColor: MARK_COLORS.lime,
+                backgroundColor: BRAND_COLORS.lime,
               }}
             />
             {active.toUpperCase()}
@@ -179,10 +200,10 @@ export default async function OpengraphImage({
               marginTop: 42,
               fontSize: 21,
               letterSpacing: 0.4,
-              color: MARK_COLORS.mute,
+              color: BRAND_COLORS.mute,
             }}
           >
-            <div style={{ width: 44, height: 2, backgroundColor: MARK_COLORS.violet }} />
+            <div style={{ width: 44, height: 2, backgroundColor: BRAND_COLORS.violet }} />
             {dict.meta.ogStack}
           </div>
         </div>
@@ -193,16 +214,16 @@ export default async function OpengraphImage({
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            borderTop: `1px solid ${MARK_COLORS.line}`,
+            borderTop: `1px solid ${BRAND_COLORS.line}`,
             paddingTop: 22,
             position: "relative",
             fontSize: 17,
             letterSpacing: 2.6,
-            color: MARK_COLORS.mute,
+            color: BRAND_COLORS.mute,
           }}
         >
-          <div style={{ display: "flex" }}>{dict.meta.title.toUpperCase()}</div>
-          <div style={{ display: "flex", color: MARK_COLORS.chalk }}>{host}</div>
+          <div style={{ display: "flex" }}>PORTFOLIO / 2026</div>
+          <div style={{ display: "flex", color: BRAND_COLORS.chalk }}>{host}</div>
         </div>
       </div>
     ),

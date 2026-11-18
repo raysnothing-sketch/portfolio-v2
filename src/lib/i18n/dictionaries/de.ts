@@ -2,16 +2,17 @@ import type { Dictionary } from "@/lib/i18n/dictionaries/fr";
 
 export const de: Dictionary = {
   meta: {
-    title: "Rayan — Produktentwickler",
+    title: "GaZaRa — Produktentwickler",
+    role: "Produktentwickler",
     description:
-      "Portfolio von Rayan — Produktentwickler. Next.js-Anwendungen, Edge-Architekturen und 3D-Interfaces, synchronisiert mit GitHub.",
+      "Portfolio von GaZaRa — Produktentwickler. Next.js-Anwendungen, Edge-Architekturen und 3D-Interfaces, synchronisiert mit GitHub.",
     ogHeadline: ["Ich baue", "Webprodukte, die halten."],
     ogStack: "Next.js · TypeScript · Turso · Three.js",
   },
 
   nav: {
     aria: "Hauptnavigation",
-    brand: "Rayan / Portfolio",
+    brand: "GaZaRa",
     projects: "Projekte",
     system: "System",
     contact: "Kontakt",
@@ -105,7 +106,7 @@ export const de: Dictionary = {
   },
 
   footer: {
-    brand: "Rayan — Portfolio / 2026",
+    brand: "GaZaRa — Portfolio / 2026",
     builtWith: "Next.js 16 · Turso · Three.js · Motion",
     views: "Aufrufe",
     top: "Nach oben",

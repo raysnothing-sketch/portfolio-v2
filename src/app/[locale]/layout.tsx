@@ -41,12 +41,12 @@ export async function generateMetadata({
     metadataBase: new URL(site),
     title: {
       default: dict.meta.title,
-      template: `%s · Rayan`,
+      template: `%s · GaZaRa`,
     },
     description: dict.meta.description,
-    applicationName: "Rayan — Portfolio",
-    authors: [{ name: "Rayan", url: "https://github.com/raysnothing-sketch" }],
-    creator: "Rayan",
+    applicationName: "GaZaRa — Portfolio",
+    authors: [{ name: "GaZaRa", url: "https://github.com/raysnothing-sketch" }],
+    creator: "GaZaRa",
     keywords: [
       "Next.js",
       "TypeScript",
@@ -67,7 +67,7 @@ export async function generateMetadata({
         .filter((code) => code !== locale)
         .map((code) => localeOg[code]),
       url: localePath(isLocale(locale) ? locale : defaultLocale),
-      siteName: "Rayan — Portfolio",
+      siteName: "GaZaRa — Portfolio",
       title: dict.meta.title,
       description: dict.meta.description,
     },

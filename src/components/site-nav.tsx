@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion, useMotionValueEvent, useScroll, useSpring } from "motion/react";
 import { useState } from "react";
 
+import { BrandMark } from "@/components/brand-mark";
 import { GithubMark } from "@/components/icons";
 import { LocaleSwitcher } from "@/components/locale-switcher";
 import type { Locale } from "@/lib/i18n/config";
@@ -47,15 +48,20 @@ export function SiteNav({ dict, locale }: { dict: Dictionary; locale: Locale }) 
         >
           <Link
             href="#accueil"
-            className="group flex items-center gap-3 font-mono text-[0.7rem] tracking-[0.24em] text-chalk uppercase"
+            aria-label={`${dict.nav.brand} — ${dict.meta.role}`}
+            className="group flex items-center gap-3"
           >
-            <span
-              aria-hidden="true"
-              className="grid size-7 place-items-center rounded-full border border-line bg-ink-card/80 text-[0.6rem] text-violet transition-colors group-hover:border-violet/60"
-            >
-              RY
+            <span className="grid size-9 place-items-center rounded-xl border border-line bg-ink-card/70 transition-colors group-hover:border-violet/50">
+              <BrandMark className="size-6 transition-transform duration-500 group-hover:scale-105" />
             </span>
-            <span className="hidden sm:inline">{dict.nav.brand}</span>
+            <span className="flex flex-col gap-1 leading-none">
+              <span className="font-mono text-[0.72rem] tracking-[0.28em] text-chalk uppercase">
+                {dict.nav.brand}
+              </span>
+              <span className="hidden font-mono text-[0.55rem] tracking-[0.16em] text-mute uppercase sm:inline">
+                {dict.meta.role}
+              </span>
+            </span>
           </Link>
 
           <ul className="hidden items-center gap-1 md:flex">

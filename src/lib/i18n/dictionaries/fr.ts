@@ -7,16 +7,17 @@ import type { CategoryKey } from "@/lib/types";
  */
 export const fr = {
   meta: {
-    title: "Rayan — Ingénieur produit web",
+    title: "GaZaRa — Ingénieur produit web",
+    role: "Ingénieur produit web",
     description:
-      "Portfolio de Rayan — ingénieur produit web. Applications Next.js, architectures edge et interfaces 3D, synchronisées avec GitHub.",
+      "Portfolio de GaZaRa — ingénieur produit web. Applications Next.js, architectures edge et interfaces 3D, synchronisées avec GitHub.",
     ogHeadline: ["Je construis des", "produits web solides."],
     ogStack: "Next.js · TypeScript · Turso · Three.js",
   },
 
   nav: {
     aria: "Navigation principale",
-    brand: "Rayan / Portfolio",
+    brand: "GaZaRa",
     projects: "Projets",
     system: "Système",
     contact: "Contact",
@@ -110,7 +111,7 @@ export const fr = {
   },
 
   footer: {
-    brand: "Rayan — Portfolio / 2026",
+    brand: "GaZaRa — Portfolio / 2026",
     builtWith: "Next.js 16 · Turso · Three.js · Motion",
     views: "vues",
     top: "Haut",
@@ -131,6 +132,7 @@ export const fr = {
 type DictionaryShape = {
   meta: {
     title: string;
+    role: string;
     description: string;
     ogHeadline: readonly string[];
     ogStack: string;
