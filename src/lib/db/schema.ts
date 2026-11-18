@@ -6,6 +6,9 @@ import { integer, sqliteTable, text } from "drizzle-orm/sqlite-core";
  * Deux usages :
  *  - `repo` renseigné  -> habille un dépôt GitHub (override des champs dérivés)
  *  - `repo` à null     -> projet non public sur GitHub, ajouté manuellement
+ *
+ * `category` stocke une clé technique (`ai`, `security`, …) traduite à
+ * l'affichage par le dictionnaire de la locale courante.
  */
 export const projects = sqliteTable("projects", {
   id: integer("id").primaryKey({ autoIncrement: true }),
@@ -13,7 +16,9 @@ export const projects = sqliteTable("projects", {
   repo: text("repo"),
   title: text("title").notNull(),
   tagline: text("tagline").notNull(),
-  category: text("category").notNull().default("Produit"),
+  taglineEn: text("tagline_en"),
+  taglineDe: text("tagline_de"),
+  category: text("category").notNull().default("product"),
   stack: text("stack").notNull().default("[]"),
   liveUrl: text("live_url"),
   repoUrl: text("repo_url"),

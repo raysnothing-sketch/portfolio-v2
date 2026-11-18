@@ -4,6 +4,7 @@ import { motion, useMotionTemplate, useMotionValue, useReducedMotion, useSpring 
 import type { PointerEvent } from "react";
 
 import { ArrowIcon } from "@/components/icons";
+import type { Dictionary } from "@/lib/i18n";
 import type { Project } from "@/lib/types";
 import { cn } from "@/lib/utils";
 
@@ -19,7 +20,15 @@ const ACCENT_GLOW: Record<Project["accent"], string> = {
   lime: "rgba(182, 243, 107, 0.16)",
 };
 
-export function ProjectCard({ project, index }: { project: Project; index: number }) {
+export function ProjectCard({
+  project,
+  index,
+  labels,
+}: {
+  project: Project;
+  index: number;
+  labels: Dictionary["projects"];
+}) {
   const reduce = useReducedMotion();
 
   const rotateX = useSpring(0, { stiffness: 180, damping: 20, mass: 0.4 });
@@ -64,7 +73,7 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
       <div className="relative flex items-start justify-between gap-4">
         <div className="flex items-center gap-2 font-mono text-[0.62rem] tracking-[0.18em] text-mute uppercase">
           <span className={cn("size-1.5 rounded-full", ACCENT_DOT[project.accent])} />
-          {project.category}
+          {labels.categories[project.category]}
         </div>
         <span className="font-mono text-[0.62rem] text-mute/60 tabular-nums">
           {String(index + 1).padStart(2, "0")}
@@ -95,8 +104,10 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
       <div className="relative mt-auto flex items-end justify-between gap-4 pt-6">
         <div className="flex items-center gap-3 font-mono text-[0.62rem] text-mute/70">
           {project.year && <span>{project.year}</span>}
-          {project.stars > 0 && <span aria-label={`${project.stars} étoiles`}>★ {project.stars}</span>}
-          {project.featured && <span className="text-lime">Sélection</span>}
+          {project.stars > 0 && (
+            <span aria-label={`${project.stars} ${labels.starsUnit}`}>★ {project.stars}</span>
+          )}
+          {project.featured && <span className="text-lime">{labels.featured}</span>}
         </div>
 
         <div className="flex items-center gap-2">
@@ -107,7 +118,7 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
               rel="noreferrer noopener"
               className="rounded-full border border-line px-3 py-1.5 text-[0.7rem] text-mute transition-colors hover:border-chalk/40 hover:text-chalk"
             >
-              Code
+              {labels.code}
             </a>
           )}
           {project.liveUrl && (
@@ -117,7 +128,7 @@ export function ProjectCard({ project, index }: { project: Project; index: numbe
               rel="noreferrer noopener"
               className="group/link inline-flex items-center gap-1.5 rounded-full bg-chalk/95 px-3 py-1.5 text-[0.7rem] font-medium text-ink transition-colors hover:bg-white"
             >
-              Voir
+              {labels.view}
               <ArrowIcon className="size-3 transition-transform group-hover/link:translate-x-0.5 group-hover/link:-translate-y-0.5" />
             </a>
           )}

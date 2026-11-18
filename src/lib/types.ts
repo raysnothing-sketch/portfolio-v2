@@ -1,10 +1,24 @@
 export type Accent = "violet" | "cyan" | "lime";
 
+/**
+ * Clés de catégorie stockées en base (colonne `category`).
+ * Le libellé affiché vient du dictionnaire de la locale courante.
+ */
+export type CategoryKey =
+  | "ai"
+  | "security"
+  | "education"
+  | "commerce"
+  | "institutional"
+  | "content"
+  | "openSource"
+  | "product";
+
 export type Project = {
   slug: string;
   title: string;
   tagline: string;
-  category: string;
+  category: CategoryKey;
   stack: string[];
   liveUrl: string | null;
   repoUrl: string | null;

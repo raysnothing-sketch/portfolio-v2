@@ -7,6 +7,7 @@ import { useRef } from "react";
 
 import { ArrowIcon, GithubMark } from "@/components/icons";
 import { StatsRow } from "@/components/stats-row";
+import type { Dictionary } from "@/lib/i18n";
 import type { ProfileStats } from "@/lib/types";
 
 const HeroScene = dynamic(() => import("@/components/hero-scene").then((mod) => mod.HeroScene), {
@@ -18,13 +19,7 @@ const HeroScene = dynamic(() => import("@/components/hero-scene").then((mod) => 
   ),
 });
 
-const TITLE_LINES = [
-  { text: "Je construis des", gradient: false },
-  { text: "produits web", gradient: true },
-  { text: "qui tiennent la charge.", gradient: false },
-];
-
-export function Hero({ stats }: { stats: ProfileStats }) {
+export function Hero({ stats, dict }: { stats: ProfileStats; dict: Dictionary }) {
   const ref = useRef<HTMLElement>(null);
   const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
@@ -64,18 +59,18 @@ export function Hero({ stats }: { stats: ProfileStats }) {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
             className="mb-6 flex flex-wrap items-center gap-x-3 gap-y-2 font-mono text-[0.68rem] tracking-[0.26em] text-mute uppercase"
           >
-            <span className="text-cyan">Ingénierie produit</span>
+            <span className="text-cyan">{dict.hero.eyebrowLeft}</span>
             <span aria-hidden="true" className="text-line">
               /
             </span>
-            <span>Web · TypeScript · Edge</span>
+            <span>{dict.hero.eyebrowRight}</span>
           </motion.p>
 
           <h1 className="text-[clamp(2.25rem,5.4vw,3.9rem)] leading-[1.03] font-medium tracking-[-0.03em]">
-            {TITLE_LINES.map((line, lineIndex) => (
-              <span key={line.text} className="block overflow-hidden py-0.5">
+            {dict.hero.titleLines.map((line, lineIndex) => (
+              <span key={line} className="block overflow-hidden py-0.5">
                 <motion.span
-                  className={line.gradient ? "text-gradient inline-block" : "inline-block"}
+                  className={lineIndex === 1 ? "text-gradient inline-block" : "inline-block"}
                   initial={reduce ? false : { y: "110%", opacity: 0 }}
                   animate={{ y: "0%", opacity: 1 }}
                   transition={{
@@ -84,7 +79,7 @@ export function Hero({ stats }: { stats: ProfileStats }) {
                     ease: [0.22, 1, 0.36, 1],
                   }}
                 >
-                  {line.text}
+                  {line}
                 </motion.span>
               </span>
             ))}
@@ -96,9 +91,7 @@ export function Hero({ stats }: { stats: ProfileStats }) {
             transition={{ duration: 0.8, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
             className="mt-7 max-w-xl text-[0.98rem] leading-relaxed text-mute sm:text-base"
           >
-            Du prototype au déploiement : je conçois des applications Next.js rapides, typées de
-            bout en bout et adossées à des bases de données edge. Moins de couches, plus de
-            précision.
+            {dict.hero.description}
           </motion.p>
 
           <motion.div
@@ -111,7 +104,7 @@ export function Hero({ stats }: { stats: ProfileStats }) {
               href="#projets"
               className="group inline-flex items-center gap-2 rounded-full bg-chalk px-5 py-3 text-sm font-medium text-ink transition-transform hover:-translate-y-0.5"
             >
-              Explorer les projets
+              {dict.hero.primaryCta}
               <ArrowIcon className="size-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </Link>
 
@@ -122,11 +115,11 @@ export function Hero({ stats }: { stats: ProfileStats }) {
               className="inline-flex items-center gap-2 rounded-full border border-line bg-ink-card/50 px-5 py-3 text-sm text-chalk transition-colors hover:border-violet/60 hover:bg-ink-card"
             >
               <GithubMark className="size-4 text-mute" />
-              Voir le code
+              {dict.hero.secondaryCta}
             </a>
           </motion.div>
 
-          <StatsRow stats={stats} />
+          <StatsRow stats={stats} labels={dict.hero.stats} />
         </div>
       </motion.div>
     </section>

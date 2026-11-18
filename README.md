@@ -10,14 +10,33 @@ Les projets sans dépôt public sont purement éditoriaux.
 
 ## Stack
 
-| Domaine    | Choix                                                       |
-| ---------- | ----------------------------------------------------------- |
-| Framework  | Next.js 16.4 — App Router, Turbopack, `cacheComponents`      |
-| UI         | React 19, Tailwind CSS v4, Motion, lucide-react              |
-| 3D         | three, @react-three/fiber, @react-three/drei                 |
-| Données    | Turso (libSQL) + Drizzle ORM                                 |
-| Validation | Zod                                                          |
-| Déploiement| Vercel                                                       |
+| Domaine     | Choix                                                       |
+| ----------- | ----------------------------------------------------------- |
+| Framework   | Next.js 16.4 — App Router, Turbopack, `cacheComponents`      |
+| UI          | React 19, Tailwind CSS v4, Motion, lucide-react              |
+| 3D          | three, @react-three/fiber, @react-three/drei                 |
+| Données     | Turso (libSQL) + Drizzle ORM                                 |
+| i18n        | DE · EN · FR — routes localisées, dictionnaires typés        |
+| Validation  | Zod                                                          |
+| Déploiement | Vercel                                                       |
+
+## Langues
+
+Trois locales, préfixées dans l'URL : `/de` (défaut), `/en`, `/fr`.
+
+- La racine `/` redirige via `src/proxy.ts` : cookie `NEXT_LOCALE` d'abord,
+  puis `Accept-Language`, puis repli sur `de`. Chaque visite d'une URL localisée
+  rafraîchit le cookie.
+- Les dictionnaires vivent dans `src/lib/i18n/dictionaries/`. `fr.ts` définit le
+  type `Dictionary` ; ajouter une clé casse le build des deux autres locales
+  plutôt que d'afficher un texte manquant.
+- Les textes de projets sont en base (`tagline`, `tagline_en`, `tagline_de`),
+  les catégories sont des clés (`ai`, `security`, …) traduites à l'affichage.
+- `hreflang` (`de`, `en`, `fr`, `x-default`) est émis par le layout et le sitemap.
+
+Pour ajouter une langue : étendre `locales` dans `src/lib/i18n/config.ts`,
+créer le dictionnaire, ajouter la colonne `tagline_xx` si besoin, puis
+redéployer — `generateStaticParams` prérend les trois variantes.
 
 ## Démarrage
 
@@ -61,23 +80,27 @@ Le site tourne sur http://localhost:3000.
 ```
 src/
 ├─ app/
-│  ├─ layout.tsx          fonts, metadata, fond global
-│  ├─ page.tsx            assemblage des sections (RSC)
+│  ├─ [locale]/
+│  │  ├─ layout.tsx       fonts, metadata, hreflang, fond global
+│  │  ├─ page.tsx         assemblage des sections (RSC)
+│  │  └─ opengraph-image.tsx carte OG localisée
 │  ├─ actions.ts          Server Action : compteur de vues
-│  ├─ opengraph-image.tsx carte OG générée
 │  ├─ robots.ts / sitemap.ts
 │  └─ globals.css         tokens Tailwind v4 + keyframes
 ├─ components/
 │  ├─ hero.tsx            hero + parallax scroll
 │  ├─ hero-scene.tsx      Canvas r3f (rendu coupé hors viewport)
+│  ├─ locale-switcher.tsx DE / EN / FR
 │  ├─ project-explorer.tsx filtres + AnimatePresence
 │  ├─ project-card.tsx    tilt 3D + glow au pointeur
 │  └─ …                  nav, marquee, stats, système, contact, footer
-└─ lib/
-   ├─ github.ts           lecture de l'API GitHub (cache 1 h)
-   ├─ projects.ts         fusion GitHub ↔ Turso
-   ├─ db/schema.ts        tables `projects`, `page_views`
-   └─ types.ts            modèle `Project`, `ProfileStats`
+├─ lib/
+│  ├─ i18n/               config, dictionnaires, getDictionary
+│  ├─ github.ts           lecture de l'API GitHub (cache 1 h)
+│  ├─ projects.ts         fusion GitHub ↔ Turso, localisée
+│  ├─ db/schema.ts        tables `projects`, `page_views`
+│  └─ types.ts            modèle `Project`, `ProfileStats`
+└─ proxy.ts               négociation de langue
 ```
 
 ## Modèle de données

@@ -1,10 +1,21 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Rayan — Ingénieur produit web";
+import { defaultLocale, isLocale } from "@/lib/i18n/config";
+import { getDictionary } from "@/lib/i18n";
+
+export const alt = "Rayan — Portfolio";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default function OpengraphImage() {
+export default async function OpengraphImage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  const dict = getDictionary(isLocale(locale) ? locale : defaultLocale);
+  const [firstLine, secondLine] = dict.meta.ogHeadline;
+
   return new ImageResponse(
     (
       <div
@@ -38,33 +49,33 @@ export default function OpengraphImage() {
           >
             RY
           </div>
-          <div style={{ color: "#8b93ab" }}>PORTFOLIO / 2026</div>
+          <div style={{ color: "#8b93ab" }}>PORTFOLIO / 2026 · {locale.toUpperCase()}</div>
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
-          <div style={{ display: "flex", fontSize: 82, fontWeight: 600, lineHeight: 1.02 }}>
-            Je construis des
+          <div style={{ display: "flex", fontSize: 78, fontWeight: 600, lineHeight: 1.05 }}>
+            {firstLine}
           </div>
           <div
             style={{
               display: "flex",
-              fontSize: 82,
+              fontSize: 78,
               fontWeight: 600,
-              lineHeight: 1.02,
+              lineHeight: 1.05,
               backgroundImage: "linear-gradient(90deg, #ffffff, #b7a9ff, #6fe6f7)",
               backgroundClip: "text",
               color: "transparent",
             }}
           >
-            produits web solides.
+            {secondLine}
           </div>
           <div style={{ display: "flex", marginTop: 10, fontSize: 28, color: "#8b93ab" }}>
-            Next.js · TypeScript · Turso · Three.js
+            {dict.meta.ogStack}
           </div>
         </div>
 
         <div style={{ display: "flex", justifyContent: "space-between", fontSize: 22, color: "#8b93ab" }}>
-          <div>Rayan — Ingénieur produit</div>
+          <div>{dict.meta.title}</div>
           <div>github.com/raysnothing-sketch</div>
         </div>
       </div>

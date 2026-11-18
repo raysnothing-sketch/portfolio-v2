@@ -5,15 +5,12 @@ import { motion, useMotionValueEvent, useScroll, useSpring } from "motion/react"
 import { useState } from "react";
 
 import { GithubMark } from "@/components/icons";
+import { LocaleSwitcher } from "@/components/locale-switcher";
+import type { Locale } from "@/lib/i18n/config";
+import type { Dictionary } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
-const LINKS = [
-  { href: "#projets", label: "Projets", index: "01" },
-  { href: "#systeme", label: "Système", index: "02" },
-  { href: "#contact", label: "Contact", index: "03" },
-];
-
-export function SiteNav() {
+export function SiteNav({ dict, locale }: { dict: Dictionary; locale: Locale }) {
   const { scrollY, scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 22, mass: 0.3 });
   const [condensed, setCondensed] = useState(false);
@@ -21,6 +18,12 @@ export function SiteNav() {
   useMotionValueEvent(scrollY, "change", (value) => {
     setCondensed(value > 40);
   });
+
+  const links = [
+    { href: "#projets", label: dict.nav.projects, index: "01" },
+    { href: "#systeme", label: dict.nav.system, index: "02" },
+    { href: "#contact", label: dict.nav.contact, index: "03" },
+  ];
 
   return (
     <header className="fixed inset-x-0 top-0 z-50">
@@ -38,7 +41,10 @@ export function SiteNav() {
             : "border-b border-transparent bg-transparent",
         )}
       >
-        <nav aria-label="Navigation principale" className="shell flex h-16 items-center justify-between gap-6">
+        <nav
+          aria-label={dict.nav.aria}
+          className="shell flex h-16 items-center justify-between gap-4"
+        >
           <Link
             href="#accueil"
             className="group flex items-center gap-3 font-mono text-[0.7rem] tracking-[0.24em] text-chalk uppercase"
@@ -49,11 +55,11 @@ export function SiteNav() {
             >
               RY
             </span>
-            <span className="hidden sm:inline">Rayan / Portfolio</span>
+            <span className="hidden sm:inline">{dict.nav.brand}</span>
           </Link>
 
           <ul className="hidden items-center gap-1 md:flex">
-            {LINKS.map((link) => (
+            {links.map((link) => (
               <li key={link.href}>
                 <Link
                   href={link.href}
@@ -68,11 +74,14 @@ export function SiteNav() {
             ))}
           </ul>
 
-          <div className="flex items-center gap-3">
-            <span className="hidden items-center gap-2 font-mono text-[0.65rem] tracking-[0.18em] text-mute uppercase sm:flex">
+          <div className="flex items-center gap-2.5">
+            <span className="hidden items-center gap-2 font-mono text-[0.65rem] tracking-[0.18em] text-mute uppercase lg:flex">
               <span aria-hidden="true" className="size-1.5 rounded-full bg-lime animate-pulse-dot" />
-              Disponible
+              {dict.nav.available}
             </span>
+
+            <LocaleSwitcher locale={locale} ariaLabel={dict.nav.language} />
+
             <a
               href="https://github.com/raysnothing-sketch"
               target="_blank"

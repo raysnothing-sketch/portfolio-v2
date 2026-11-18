@@ -1,16 +1,17 @@
 import { GithubMark } from "@/components/icons";
 import { ViewCounter } from "@/components/view-counter";
+import type { Dictionary } from "@/lib/i18n";
 
-export function SiteFooter() {
+export function SiteFooter({ dict }: { dict: Dictionary }) {
   return (
     <footer className="border-t border-line/70 bg-ink-soft/30">
       <div className="shell flex flex-col gap-6 py-10 sm:flex-row sm:items-center sm:justify-between">
         <div className="flex flex-col gap-2">
           <p className="font-mono text-[0.65rem] tracking-[0.22em] text-mute/70 uppercase">
-            Rayan — Portfolio / 2026
+            {dict.footer.brand}
           </p>
           <p className="text-xs text-mute/60">
-            Next.js 16 · Turso · Three.js · Motion — <ViewCounter />
+            {dict.footer.builtWith} — <ViewCounter label={dict.footer.views} />
           </p>
         </div>
 
@@ -28,7 +29,7 @@ export function SiteFooter() {
             href="#accueil"
             className="font-mono text-[0.65rem] tracking-[0.18em] text-mute/70 uppercase transition-colors hover:text-cyan"
           >
-            Haut ↑
+            {dict.footer.top} ↑
           </a>
         </div>
       </div>

@@ -1,34 +1,7 @@
 import { Reveal } from "@/components/reveal";
+import type { Dictionary } from "@/lib/i18n";
 
-const PRINCIPLES = [
-  {
-    index: "01",
-    title: "Architecture lisible",
-    body: "App Router, Server Components par défaut, Server Actions pour les mutations. La logique métier vit dans /lib, jamais dans les composants.",
-    tags: ["RSC", "Server Actions", "Feature-driven"],
-  },
-  {
-    index: "02",
-    title: "Performance mesurée",
-    body: "Budgets de bundle, rendu 3D coupé hors viewport, images optimisées, cache par profil. On mesure avant d'optimiser, jamais l'inverse.",
-    tags: ["Core Web Vitals", "ISR", "Lazy 3D"],
-  },
-  {
-    index: "03",
-    title: "Sécurité par défaut",
-    body: "Validation Zod à chaque frontière, secrets hors du client, données dérivées côté serveur. Un formulaire n'est jamais une source de vérité.",
-    tags: ["Zod", "Moindre privilège", "TLS"],
-  },
-];
-
-const TREE = `portfolio-v2
-├─ src/app/            RSC · Server Actions · metadata
-├─ src/lib/github.ts   sync dépôts GitHub (cache 1 h)
-├─ src/lib/db/         Turso libSQL · Drizzle ORM
-├─ src/components/     Three.js · Motion · Tailwind v4
-└─ drizzle/            schéma versionné + seed`;
-
-export function SystemSection() {
+export function SystemSection({ dict }: { dict: Dictionary }) {
   return (
     <section id="systeme" className="relative py-24 sm:py-32">
       <div
@@ -40,26 +13,25 @@ export function SystemSection() {
         <Reveal className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="mb-3 font-mono text-[0.65rem] tracking-[0.28em] text-violet uppercase">
-              02 — Système
+              {dict.system.kicker}
             </p>
             <h2 className="max-w-xl text-[clamp(1.9rem,3.6vw,2.7rem)] leading-[1.08] font-medium tracking-[-0.02em] text-balance">
-              La méthode derrière les interfaces.
+              {dict.system.title}
             </h2>
           </div>
-          <p className="max-w-sm text-sm leading-relaxed text-mute">
-            Trois contraintes que je m’impose sur chaque projet : comprendre le domaine,
-            réduire la surface technique, rendre chaque décision réversible.
-          </p>
+          <p className="max-w-sm text-sm leading-relaxed text-mute">{dict.system.intro}</p>
         </Reveal>
 
         <div className="mt-14 grid gap-4 lg:grid-cols-3">
-          {PRINCIPLES.map((principle, index) => (
-            <Reveal key={principle.index} delay={index * 0.08}>
+          {dict.system.principles.map((principle, index) => (
+            <Reveal key={principle.title} delay={index * 0.08}>
               <article className="group flex h-full flex-col rounded-2xl border border-line/90 bg-ink-card/40 p-6 transition-colors hover:border-violet/40">
                 <span className="font-mono text-[0.62rem] tracking-[0.2em] text-mute/60">
-                  {principle.index}
+                  {String(index + 1).padStart(2, "0")}
                 </span>
-                <h3 className="mt-5 text-lg font-medium tracking-tight text-chalk">{principle.title}</h3>
+                <h3 className="mt-5 text-lg font-medium tracking-tight text-chalk">
+                  {principle.title}
+                </h3>
                 <p className="mt-3 flex-1 text-sm leading-relaxed text-mute">{principle.body}</p>
                 <ul className="mt-6 flex flex-wrap gap-1.5">
                   {principle.tags.map((tag) => (
@@ -83,11 +55,11 @@ export function SystemSection() {
               <span aria-hidden="true" className="size-2 rounded-full bg-[#febc2e]/70" />
               <span aria-hidden="true" className="size-2 rounded-full bg-[#28c840]/70" />
               <span className="ml-3 font-mono text-[0.62rem] tracking-[0.16em] text-mute/60 uppercase">
-                arborescence — elle est réellement déployée
+                {dict.system.treeCaption}
               </span>
             </div>
             <pre className="overflow-x-auto px-5 py-6 font-mono text-[0.74rem] leading-7 text-mute">
-              <code>{TREE}</code>
+              <code>{dict.system.tree}</code>
             </pre>
             <div
               aria-hidden="true"
