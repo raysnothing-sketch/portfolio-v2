@@ -90,6 +90,19 @@ function yearOf(date: string | null): string | null {
   return Number.isNaN(parsed.getTime()) ? null : String(parsed.getFullYear());
 }
 
+/** Lecture tolérante : une base injoignable ne doit pas casser le build. */
+async function loadProjectRows(): Promise<ProjectRow[]> {
+  try {
+    return await db
+      .select()
+      .from(projectsTable)
+      .orderBy(desc(projectsTable.featured), projectsTable.sortOrder);
+  } catch (error) {
+    console.error("[db] lecture des projets impossible", error);
+    return [];
+  }
+}
+
 /**
  * Fusionne trois sources :
  *  1. les dépôts GitHub (vérité automatique)
@@ -103,10 +116,7 @@ export async function getProjects(locale: Locale): Promise<Project[]> {
   cacheLife("hours");
   cacheTag("projects");
 
-  const [repos, rows] = await Promise.all([
-    getGithubRepos(),
-    db.select().from(projectsTable).orderBy(desc(projectsTable.featured), projectsTable.sortOrder),
-  ]);
+  const [repos, rows] = await Promise.all([getGithubRepos(), loadProjectRows()]);
 
   const byRepo = new Map(rows.filter((row) => row.repo).map((row) => [row.repo as string, row]));
 

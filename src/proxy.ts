@@ -31,6 +31,11 @@ export function proxy(request: NextRequest) {
 
   const response = NextResponse.redirect(url);
   response.headers.set("Vary", "Accept-Language, Cookie");
+  response.cookies.set(LANGUAGE_COOKIE, locale, {
+    path: "/",
+    maxAge: 60 * 60 * 24 * 365,
+    sameSite: "lax",
+  });
   return response;
 }
 
