@@ -49,7 +49,7 @@ export default async function OpengraphImage({
           >
             RY
           </div>
-          <div style={{ color: "#8b93ab" }}>PORTFOLIO / 2026 · {locale.toUpperCase()}</div>
+          <div style={{ color: "#8b93ab" }}>{`PORTFOLIO / 2026 · ${locale.toUpperCase()}`}</div>
         </div>
 
         <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
