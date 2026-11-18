@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 200 200" fill="none">
+  <defs>
+    <linearGradient id="letters" x1="24" y1="58" x2="176" y2="142" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#7c5cff" />
+      <stop offset="0.55" stop-color="#4f9cf6" />
+      <stop offset="1" stop-color="#22d3ee" />
+    </linearGradient>
+    <linearGradient id="tile" x1="0" y1="0" x2="0" y2="200" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0a0d16" />
+      <stop offset="1" stop-color="#05060a" />
+    </linearGradient>
+    <radialGradient id="halo" cx="0.26" cy="0.14" r="0.9">
+      <stop stop-color="#7c5cff" stop-opacity="0.24" />
+      <stop offset="1" stop-color="#7c5cff" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+  <path d="M62 58H26V142H62V104H44" stroke="#ffffff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M82 58H118L82 142H118" stroke="#ffffff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M138 142V58H166V104H138M162 104L174 142" stroke="#ffffff" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" />
+</svg>

@@ -32,6 +32,8 @@ type MarkOptions = {
   transparent?: boolean;
   /** Rayon des coins ; `null` = carré plein (iOS applique son propre masque). */
   cornerRadius?: number | null;
+  /** Trait blanc sur fond transparent (CV, impression). */
+  mono?: boolean;
 };
 
 function monogramSvg({
@@ -39,19 +41,22 @@ function monogramSvg({
   compact = false,
   transparent = false,
   cornerRadius = 46,
+  mono = false,
 }: MarkOptions): string {
   const stroke = compact ? MONOGRAM_STROKE_COMPACT : MONOGRAM_STROKE;
+  const isTransparent = transparent || mono;
 
-  const tile = transparent
+  const tile = isTransparent
     ? ""
     : `
   <rect width="${VIEW}" height="${VIEW}" rx="${cornerRadius}" fill="url(#tile)" />
   <rect x="0.75" y="0.75" width="${VIEW - 1.5}" height="${VIEW - 1.5}" rx="${cornerRadius === null ? 0 : cornerRadius - 0.75}" fill="none" stroke="${BRAND_COLORS.line}" stroke-width="1.5" />
   <rect width="${VIEW}" height="${VIEW}" rx="${cornerRadius}" fill="url(#halo)" />`;
 
+  const strokePaint = mono ? "#ffffff" : "url(#letters)";
   const glyphs = MONOGRAM_GLYPHS.map(
     (d) =>
-      `  <path d="${d}" stroke="url(#letters)" stroke-width="${stroke}" stroke-linecap="round" stroke-linejoin="round" />`,
+      `  <path d="${d}" stroke="${strokePaint}" stroke-width="${stroke}" stroke-linecap="round" stroke-linejoin="round" />`,
   ).join("\n");
 
   return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${VIEW} ${VIEW}" fill="none">
@@ -136,6 +141,20 @@ async function main() {
   ]);
   await writeFile(path.join(ROOT, "src", "app", "favicon.ico"), ico);
 
+  // Variante monochrome : trait blanc sur fond transparent (CV, impression).
+  await writeFile(
+    path.join(brandDir, "icon-mono.svg"),
+    monogramSvg({ size: 512, mono: true }),
+  );
+  await writeFile(
+    path.join(brandDir, "icon-mono-512.png"),
+    await rasterize({ size: 512, mono: true }),
+  );
+  await writeFile(
+    path.join(brandDir, "icon-mono-1024.png"),
+    await rasterize({ size: 1024, mono: true }),
+  );
+
   // Monogramme transparent, encodé en base64 pour la carte Open Graph.
   // 600 px : au-delà du plus grand usage (540 px dans le filigrane), donc net.
   const encode = async (options: MarkOptions) => {
@@ -167,6 +186,7 @@ export const MONOGRAM_GHOST_BASE64 =
   console.log("Assets de marque générés :");
   console.log("  src/app/icon.svg, favicon.ico, apple-icon.png");
   console.log("  public/brand/icon.svg, icon-512.png, icon-192.png");
+  console.log("  public/brand/icon-mono.svg, icon-mono-512.png, icon-mono-1024.png");
   console.log(
     `  src/lib/brand/mark-data.ts (${Math.round((solid.length + ghost.length) / 1024)} Ko)`,
   );

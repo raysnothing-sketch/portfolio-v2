@@ -86,8 +86,10 @@ coordonnées, dans `src/lib/brand/monogram.ts`. `pnpm brand:assets` en dérive :
 | `src/app/icon.svg`             | icône d'onglet (trait renforcé à 16 px)|
 | `src/app/favicon.ico`          | 16 / 32 / 48 px                        |
 | `src/app/apple-icon.png`       | 180 px, écran d'accueil iOS            |
-| `public/brand/icon-512.png`    | source, réseaux sociaux, presse        |
 | `public/brand/icon.svg`        | source vectorielle haute résolution    |
+| `public/brand/icon-512.png`    | réseaux sociaux, presse                |
+| `public/brand/icon-mono.svg`   | monochrome blanc sur transparent (CV, impression) |
+| `public/brand/icon-mono-512.png` / `icon-mono-1024.png` | monochrome raster |
 | `src/lib/brand/mark-data.ts`   | monogramme base64 pour la carte Open Graph |
 
 La bannière 1200 × 630 est générée à la demande par
