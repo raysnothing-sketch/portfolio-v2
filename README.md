@@ -74,6 +74,25 @@ Le site tourne sur http://localhost:3000.
 | `pnpm db:generate`| Génère les migrations SQL                    |
 | `pnpm db:studio`  | Drizzle Studio                               |
 | `pnpm db:seed`    | Seed des projets éditoriaux                  |
+| `pnpm brand:assets`| Régénère icône, favicon et emblème OG       |
+
+## Identité visuelle
+
+Le sceau (anneau hexagonal ouvert + noyau) est décrit une seule fois, en
+coordonnées, dans `src/lib/brand/mark.ts`. `pnpm brand:assets` en dérive :
+
+| Fichier                        | Usage                                  |
+| ------------------------------ | -------------------------------------- |
+| `src/app/icon.svg`             | icône d'onglet (anneau fermé, lisible à 16 px) |
+| `src/app/favicon.ico`          | 16 / 32 / 48 px                        |
+| `src/app/apple-icon.png`       | 180 px, écran d'accueil iOS            |
+| `public/brand/icon-512.png`    | source, réseaux sociaux, presse        |
+| `public/brand/icon.svg`        | source vectorielle haute résolution    |
+| `src/lib/brand/mark-data.ts`   | emblème base64 pour la carte Open Graph |
+
+La bannière 1200 × 630 est générée à la demande par
+`src/app/[locale]/opengraph-image.tsx` : elle reprend l'emblème, la grille et
+la hiérarchie typographique du site, dans la langue de la page.
 
 ## Architecture
 
@@ -83,8 +102,9 @@ src/
 │  ├─ [locale]/
 │  │  ├─ layout.tsx       fonts, metadata, hreflang, fond global
 │  │  ├─ page.tsx         assemblage des sections (RSC)
-│  │  └─ opengraph-image.tsx carte OG localisée
+│  │  └─ opengraph-image.tsx bannière OG localisée
 │  ├─ actions.ts          Server Action : compteur de vues
+│  ├─ icon.svg / favicon.ico / apple-icon.png
 │  ├─ robots.ts / sitemap.ts
 │  └─ globals.css         tokens Tailwind v4 + keyframes
 ├─ components/
@@ -96,6 +116,7 @@ src/
 │  └─ …                  nav, marquee, stats, système, contact, footer
 ├─ lib/
 │  ├─ i18n/               config, dictionnaires, getDictionary
+│  ├─ brand/mark.ts       géométrie du sceau (source unique)
 │  ├─ github.ts           lecture de l'API GitHub (cache 1 h)
 │  ├─ projects.ts         fusion GitHub ↔ Turso, localisée
 │  ├─ db/schema.ts        tables `projects`, `page_views`
