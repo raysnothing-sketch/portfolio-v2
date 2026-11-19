@@ -1,4 +1,3 @@
-import { cacheLife, cacheTag } from "next/cache";
 import { desc } from "drizzle-orm";
 
 import { db } from "@/lib/db";
@@ -112,10 +111,6 @@ async function loadProjectRows(): Promise<ProjectRow[]> {
  * La locale fait partie de la clé de cache : trois variantes prérendues.
  */
 export async function getProjects(locale: Locale): Promise<Project[]> {
-  "use cache";
-  cacheLife("hours");
-  cacheTag("projects");
-
   const [repos, rows] = await Promise.all([getGithubRepos(), loadProjectRows()]);
 
   const byRepo = new Map(rows.filter((row) => row.repo).map((row) => [row.repo as string, row]));
@@ -189,10 +184,6 @@ export async function getProjects(locale: Locale): Promise<Project[]> {
 }
 
 export async function getStats(): Promise<ProfileStats> {
-  "use cache";
-  cacheLife("hours");
-  cacheTag("projects");
-
   const repos = await getGithubRepos();
   const languages = new Set(repos.map((repo) => repo.language).filter(Boolean));
   const dates = repos
