@@ -24,6 +24,7 @@ export function SiteNav({ dict, locale }: { dict: Dictionary; locale: Locale }) 
     { href: "#projets", label: dict.nav.projects, index: "01" },
     { href: "#systeme", label: dict.nav.system, index: "02" },
     { href: "#contact", label: dict.nav.contact, index: "03" },
+    { href: `/${locale}/dsh`, label: "DSH-Trainer", index: "04" },
   ];
 
   return (

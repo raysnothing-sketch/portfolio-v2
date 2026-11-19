@@ -1,0 +1,175 @@
+/*
+ * Identité visuelle propre au DSH-Trainer.
+ *
+ * Le portfolio utilise un thème sombre (ink / chalk / violet / cyan / lime).
+ * Ici, tout est redéfini dans le périmètre `.dsh` : les utilitaires Tailwind
+ * référencent `var(--color-*)`, donc une seule surcharge suffit à donner au
+ * module son papier, son encre, ses accents et sa typographie. Aucune règle ne
+ * sort de ce périmètre : le portfolio reste strictement inchangé.
+ */
+
+.dsh {
+  /* Papier & encre — cahier d'examen, pas terminal de développement. */
+  --color-ink: #f4f0e6;
+  --color-ink-soft: #ebe4d5;
+  --color-ink-card: #fbf8f1;
+  --color-line: #d2c8b5;
+  --color-line-soft: #e3dbcc;
+  --color-mute: #6d6659;
+  --color-chalk: #1d252b;
+
+  /* Accents : rouge de correction, bleu d'encre, vert olive validé. */
+  --color-violet: #a03a28;
+  --color-cyan: #1c5c70;
+  --color-lime: #4c6d43;
+  --color-amber-300: #a86b12;
+
+  --radius-md: 2px;
+  --radius-lg: 2px;
+  --radius-xl: 3px;
+  --radius-2xl: 3px;
+  --radius-3xl: 4px;
+
+  --font-sans: var(--font-dsh-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-dsh-mono), ui-monospace, "Courier New", monospace;
+  --font-display: var(--font-dsh-display), Georgia, "Times New Roman", serif;
+
+  position: relative;
+  z-index: 0;
+  min-height: 100svh;
+  color: var(--color-chalk);
+  background-color: var(--color-ink);
+  /* Papier réglé : une ligne tous les 2 rem, très discrète. */
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 31px,
+    rgba(29, 37, 43, 0.035) 31px,
+    rgba(29, 37, 43, 0.035) 32px
+  );
+  font-family: var(--font-sans);
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+
+.dsh ::selection {
+  background-color: rgba(160, 58, 40, 0.18);
+  color: var(--color-chalk);
+}
+
+.dsh :focus-visible {
+  outline: 2px solid var(--color-cyan);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
+/* Titres éditoriaux — aucune ressemblance avec la typo du portfolio. */
+.dsh .font-display {
+  font-family: var(--font-display);
+}
+
+.dsh h1,
+.dsh h2,
+.dsh h3 {
+  font-family: var(--font-display);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+
+.dsh blockquote {
+  font-family: var(--font-display);
+}
+
+.dsh .panel {
+  background-image: none;
+  background-color: var(--color-ink-card);
+  border: 1px solid var(--color-line);
+  box-shadow: 0 1px 0 rgba(29, 37, 43, 0.04), 0 12px 30px -26px rgba(29, 37, 43, 0.5);
+  backdrop-filter: none;
+}
+
+.dsh .text-gradient {
+  background: none;
+  -webkit-background-clip: border-box;
+  background-clip: border-box;
+  -webkit-text-fill-color: var(--color-violet);
+  color: var(--color-violet);
+}
+
+/* Surlignage du texte de lecture : trois feutres, pas un néon. */
+.dsh mark {
+  border-radius: 0;
+}
+
+/* Le portfolio a ses pilules ; ici les contrôles sont carrés, comme un tampon. */
+.dsh button,
+.dsh a[href] {
+  border-radius: 2px;
+}
+
+.dsh button.rounded-full,
+.dsh a.rounded-full {
+  border-radius: 2px;
+}
+
+/* Barres de défilement papier. */
+.dsh ::-webkit-scrollbar-track {
+  background: var(--color-ink-soft);
+}
+
+.dsh ::-webkit-scrollbar-thumb {
+  background: #c2b7a3;
+  border-color: var(--color-ink-soft);
+}
+
+.dsh ::-webkit-scrollbar-thumb:hover {
+  background: #a99c86;
+}
+
+/* Le lien « aller au contenu » et le fond vivent dans le layout racine, hors
+   de `.dsh` : on les neutralise pour que le portfolio ne déborde jamais ici. */
+body:has(.dsh) {
+  background-color: #f4f0e6;
+  color: #1d252b;
+}
+
+body:has(.dsh) > div[aria-hidden="true"] {
+  display: none;
+}
+
+body:has(.dsh) > a[href="#contenu"]:focus {
+  background-color: var(--color-chalk);
+  color: var(--color-ink);
+  border-radius: 2px;
+}
+
+/* En-tête de l'épreuve : double filet, comme une page de cahier. */
+.dsh .dsh-rule-double {
+  border-bottom: 3px double var(--color-line);
+}
+
+.dsh .dsh-margin-note {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-violet);
+}
+
+.dsh .dsh-stamp {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid currentColor;
+  padding: 0.15rem 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  transform: rotate(-1.5deg);
+}
+
+@media print {
+  .dsh {
+    background: #fff;
+  }
+}
