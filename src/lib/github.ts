@@ -1,3 +1,5 @@
+import { cacheLife, cacheTag } from "next/cache";
+
 import { env } from "@/lib/env";
 
 export type GithubRepo = {
@@ -36,6 +38,10 @@ type RawRepo = {
  * à chaque requête (et donc d'exploser le rate limit).
  */
 export async function getGithubRepos(): Promise<GithubRepo[]> {
+  "use cache";
+  cacheLife("hours");
+  cacheTag("github-repos");
+
   const user = env.githubUser();
   const headers: Record<string, string> = {
     Accept: "application/vnd.github+json",
